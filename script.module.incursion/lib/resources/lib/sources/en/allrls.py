@@ -121,7 +121,7 @@ class source:
                                  'language': "en",
                                  'url': i,
                                  'direct': False,
-                                 'debridonly': True})
+                                 'debridonly': False})
                         if 'rapidgator' in i:
                             sources.append(
                                 {'source': "rapidgator.net",
