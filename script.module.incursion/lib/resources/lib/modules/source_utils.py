@@ -50,7 +50,8 @@ def get_release_quality(release_name, release_link=None):
         fmt = re.sub('(.+)(\.|\(|\[|\s)(\d{4}|S\d*E\d*|S\d*)(\.|\)|\]|\s)', '', release_name)
         fmt = re.split('\.|\(|\)|\[|\]|\s|-', fmt)
         fmt = [i.lower() for i in fmt]
-        if '1080p' in fmt: quality = '1080p'
+        if '2160p' in fmt: quality = '4K'
+        elif '1080p' in fmt: quality = '1080p'
         elif '720p' in fmt: quality = '720p'
         elif 'brrip' in fmt: quality = '720p'
         elif any(i in ['dvdscr', 'r5', 'r6'] for i in fmt): quality = 'SCR'
@@ -61,7 +62,8 @@ def get_release_quality(release_name, release_link=None):
                 release_link = release_link.lower()
                 try: release_link = release_link.encode('utf-8')
                 except: pass
-                if '1080' in release_link: quality = '1080p'
+                if '2160' in release_link: quality = '4K'
+                elif '1080' in release_link: quality = '1080p'
                 elif '720' in release_link: quality = '720p'
                 elif '.hd' in release_link: quality = 'SD'
                 else: 
@@ -114,7 +116,8 @@ def check_sd_url(release_link):
 
     try:
         release_link = release_link.lower()
-        if '1080' in release_link: quality = '1080p'
+        if '2160' in release_link: quality = '4K'
+        elif '1080' in release_link: quality = '1080p'
         elif '720' in release_link: quality = '720p'
         elif '.hd.' in release_link: quality = '720p'
         elif any(i in ['dvdscr', 'r5', 'r6'] for i in release_link): quality = 'SCR'
