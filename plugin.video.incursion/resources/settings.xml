@@ -252,6 +252,8 @@
         <setting id="chillax.password" type="text" option="hidden" label="32307" default="" />
         <setting type="sep" />
         <setting type="lsep" label="Furk.net" />
+        <setting id="furk.user_name" type="text" label="Furk Username" default="" />
+        <setting id="furk.user_pass" type="text" label="Furk Password" option="hidden" default="" />
         <setting id="furk.api" type="text" label="Furk API Key" default="" />
         <setting id="furk.limit" label="Limit results" type="slider" default="25" range="5,5,200" option="int" />
         <setting type="sep" />
