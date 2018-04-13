@@ -32,7 +32,7 @@ def search(url):
     dirs1 = ['/dubbed-anime-list', '/cartoon-list', '/subbed-anime-list']
     dirs2 = ['/ova-list', '/movie-list']
     if url != None and url != "": search = url
-    else: 
+    else:
         keyb = xbmc.Keyboard('', 'Search for')
         keyb.doModal()
         if keyb.isConfirmed() != None and keyb.isConfirmed() != "": search = keyb.getText()
@@ -68,7 +68,7 @@ def cart_fav(url):
     for name,url,icon,fanart in Regex:
         name = name.replace("`","'")
         addDir(name,url,20,icon,FANART,'')
-    xbmc.executebuiltin('Container.SetViewMode(50)')    
+    xbmc.executebuiltin('Container.SetViewMode(50)')
 
 def genre(url):
     OPEN = Open_Url(url)
@@ -152,6 +152,7 @@ def addDir(name,url,mode,iconimage,fanart,description):
 
 def resolve(name,url,iconimage,description):
     p = requests.get(url)
+
     try:
         match = re.findall(r'<script>var ... = ""; var ... = \[(.*?)]', p.text)[0]
         spread = re.findall(r'- (.*?)\); } \); document.write\(decodeURI', p.text)[0]
@@ -168,7 +169,7 @@ def resolve(name,url,iconimage,description):
         url = ''.join(url)
         url = re.findall(r'src="(.*?)"', url)[0]
         url = requests.get(BASEURL + url)
-        url = re.findall(r'file:.*?"(.*?)"', url.text)
+        url = re.findall(r'src:\s\'(.*?)\'', url.text)
         quality = ['1080p','720p']
         play_sd = True
         for q in quality:
@@ -195,13 +196,13 @@ def play_video(url):
 def get_params():
     param=[]
     paramstring=sys.argv[2]
-    if len(paramstring)>=2: 
-        params=sys.argv[2] 
+    if len(paramstring)>=2:
+        params=sys.argv[2]
         cleanedparams=params.replace('?','')
         if (params[len(params)-1]=='/'):
             params=params[0:len(params)-2]
         pairsofparams=cleanedparams.split('&')
-        param={}    
+        param={}
         for i in range(len(pairsofparams)):
             splitparams={}
             splitparams=pairsofparams[i].split('=')
