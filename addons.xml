@@ -48,7 +48,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.incursion" version="0.1.16" name="Incursion" provider-name="Incursion">
+<addon id="plugin.video.incursion" version="0.1.17" name="Incursion" provider-name="Incursion">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0" />
 		<import addon="script.module.incursion" />
@@ -79,17 +79,17 @@
     			<screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
 		</assets>
 		<news>
-v0.1.16 (APR-2018)
-Scraper Fixes - 2ddl, chillax, allrls, movie4kis
-New Scrapers - pubfilmonline, rlsscn
-Settings cleanup
-Added polish fixes
-Slacked on documentation - slack update notes
+v0.1.17 (APR-2018)
+Even more Scraper Fixes
+CFSCRAPE Fix
+Moderator Disabled
+Fixed Trakt On Deck Magical Dissapearing Act
+Fixed search issue caused by character accents
 		</news>
 	</extension>
 </addon>
 
-<addon id="plugin.video.watchnixtoons" name="WatchNixtoons" version="1.0.2" provider-name="Nixgates">
+<addon id="plugin.video.watchnixtoons" name="WatchNixtoons" version="1.0.3" provider-name="Nixgates">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.addon.common" />
@@ -127,6 +127,18 @@ Slacked on documentation - slack update notes
 		<summary>Metadata for the Incursion Addon</summary>
 		<description>Metadata for Incursion are maintained separately to make distribution of the the addon itself easier/faster.</description>
 		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.module.incursion" name="Incursion Module" version="1.19" provider-name="Incursion">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0" />
+		<import addon="script.module.beautifulsoup4"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Incursion</summary>
 	</extension>
 </addon>
 
