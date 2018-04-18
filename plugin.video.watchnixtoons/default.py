@@ -151,37 +151,43 @@ def addDir(name,url,mode,iconimage,fanart,description):
 
 
 def resolve(name,url,iconimage,description):
+
+    p_type = xbmcaddon.Addon().getSetting('playback_method')
+    if p_type == '': p_type = '0'
+        
     p = requests.get(url)
-
+    url = ''
     try:
-        match = re.findall(r'<script>var ... = ""; var ... = \[(.*?)]', p.text)[0]
-        spread = re.findall(r'- (.*?)\); } \); document.write\(decodeURI', p.text)[0]
-
-        match = match.strip('"')
-        match = match.split(',')
-        url = []
+        match = re.findall('''var\s*[a-zA-Z]{3}\s*\=\s*\[([^\]]+)''', p.text)[0]
+        spread = re.findall('''-\s*(\d+)\)\;\s*\}''', p.text)[0]
+        match = re.findall('''['"]([^'"]+)['"]''', match)
         for i in match:
-            i = i.replace('==','=').strip('"')
             i = base64.b64decode(i)
             i = re.findall(r'(\d+)',i)[0]
             i = chr(int(i) - int(spread))
-            url.append(i)
-        url = ''.join(url)
-        url = re.findall(r'src="(.*?)"', url)[0]
-        url = requests.get(BASEURL + url)
-        url = re.findall(r'src:\s\'(.*?)\'', url.text)
-        quality = ['1080p','720p']
-        play_sd = True
-        for q in quality:
+            url += i
+        url = re.findall(r'src="(.*?)"', url.replace("embed", "embed-adh"))[0]
+        url = requests.get(BASEURL + url)        
+        url = re.findall(r'''file:\s*['\"]([^'\"]+)['\"](?:\,\s*label:\s*|)(?:['\"]|)([\d]+|)''', url.text)
+        url = [(i[0],'0' if i[1] == '' else i[1]) for i in url]
+        url = sorted(url, key=lambda x: int(x[1]),reverse=True)
+        
+        if len(url) == 1: play_video(url[0][0])
+        
+        
+        if p_type == '0':
+            streamname = []
+            streamurl = []
             for i in url:
-                if q in i and play_sd is True:
-                    play_video(i)
-                    play_sd = False
-                    break
-
-        if play_sd is True:
-            play_video(url[0])
-
+                streamurl.append(i[0])
+                streamname.append(i[1] + 'p' if int(i[1]) >= 720 else 'SD')
+            dialog = xbmcgui.Dialog()
+            select = dialog.select(name,streamname)
+            if select < 0: quit()
+            else: play_video(streamurl[select])
+        elif p_type == '1': play_video(url[0][0])
+        elif p_type == '2': play_video(url[-1][0])
+        
     except:
         pass
 
